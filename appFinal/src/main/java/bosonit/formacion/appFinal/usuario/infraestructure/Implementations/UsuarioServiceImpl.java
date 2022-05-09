@@ -1,0 +1,42 @@
+package bosonit.formacion.appFinal.usuario.infraestructure.Implementations;
+
+
+import bosonit.formacion.appFinal.usuario.domain.Usuario;
+import bosonit.formacion.appFinal.usuario.infraestructure.Services.UsuarioService;
+import bosonit.formacion.appFinal.usuario.repository.UsuarioRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.data.util.Pair;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+@Slf4j
+@Service
+public class UsuarioServiceImpl implements UsuarioService {
+
+
+    @Autowired
+    UsuarioRepository repositorio;
+
+
+    @Override
+    public Optional<Usuario> guardarUsuario(Usuario p) {
+        repositorio.save(p);
+        log.warn("----- SE HA GUARDADO UN USUARIO EN LA BASE DE DATOS -----");
+        log.info("----- SE HA AÑADIDO AL USUARIO "+p+" A LA BASE DE DATOS -----");
+        return repositorio.findByEmail(p.getCorreo());  //TODO SERÍA MEJOR DEVOLVER UN OUTPUT DTO PORQUE SEA INSEGURO MANDAR TODOS LOS DATOS AL SERVICIO ?¿?¿
+    }
+
+    @Override
+    public Pair<Boolean, Boolean> comprobarExistenciaYRol(String correo, String password) {
+        log.info("----- SE HA COMPROBADOR EL ROL DE UN USUARIO DE LA BASE DE DATOS -----");
+        if(repositorio.findRol(correo, password).isEmpty())
+            return Pair.of(
+                    false,
+                    false);
+        return Pair.of(
+                false,
+                repositorio.findRol(correo, password).get().isAdministrador());
+    }
+}

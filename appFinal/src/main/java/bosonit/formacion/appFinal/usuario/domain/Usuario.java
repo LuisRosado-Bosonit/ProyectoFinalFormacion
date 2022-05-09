@@ -22,6 +22,11 @@ public class Usuario {
 
     private String apellidos;
 
+    @NotNull
+    @Size(min = 8, max= 64, message =  "La contraseña no tiene la longitud recomendada ")
+    private String password;
+
+    @Size(min = 3, max = 18, message = "La longitud del número de teléfono no se ajusta a lo permitido")
     private String numero;
 
     @NotNull
