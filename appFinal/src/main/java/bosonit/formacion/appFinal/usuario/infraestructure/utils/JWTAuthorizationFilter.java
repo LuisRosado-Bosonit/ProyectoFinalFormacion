@@ -18,7 +18,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private final String HEADER = "Authorization";
     private final String PREFIX = "";
-    private final String SECRET = "LlevaLaTararaUnVestidoBlancoLlenoDeCascabeles";
+    private final String SECRET = "LlevaLaTararaUnVestidoBlancoLlenoDeCascabelesUnVestidoBlancoLleno";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {

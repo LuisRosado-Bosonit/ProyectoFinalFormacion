@@ -43,7 +43,7 @@ public class usuarioController {
     @PostMapping("/api/v0/usuario/login")
     public ResponseEntity<Object> login(@RequestParam("user") String email, @RequestParam("password") String pwd) {
         String rol = "USER"; //FIXME FALTA RELLENAR EL ERROR DE LA EXCEPCIÓN
-        if(!servicio.comprobarExistenciaYRol(email,pwd).getFirst())
+        if(servicio.comprobarExistenciaYRol(email,pwd).getFirst())
             return ResponseEntity.status(501).body(error);
         if(servicio.comprobarExistenciaYRol(email,pwd).getSecond())
             rol = "ADMIN";
@@ -53,7 +53,7 @@ public class usuarioController {
     }
 
     private String getJWTToken(String username, String rol) {
-        String secretKey = "LlevaLaTararaUnVestidoBlancoLlenoDeCascabeles";
+        String secretKey = "LlevaLaTararaUnVestidoBlancoLlenoDeCascabelesUnVestidoBlancoLleno";
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList(rol);
 
