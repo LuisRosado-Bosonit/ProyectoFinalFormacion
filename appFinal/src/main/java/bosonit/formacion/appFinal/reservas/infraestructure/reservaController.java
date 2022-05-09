@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
+
 @RestController
 public class reservaController {
 
@@ -24,34 +24,4 @@ public class reservaController {
 
 
 
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/api/v0/reserva")
-    public ResponseEntity<Object> login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
-        String rol = "USER";
-        //if (persona.auth(username, pwd)) rol = "ADMIN" ;
-        System.out.println("El rol definido es "+rol);
-        return ResponseEntity.status(HttpStatus.OK).body(getJWTToken(username, "ROLE_"+rol));
-
-    }
-
-    private String getJWTToken(String username, String rol) {
-        String secretKey = "mySecretKeymySecretKeymySecretKeymySecretKeymySecretKeymySecretKey";
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList(rol);
-
-        String token = Jwts
-                .builder()
-                .setId("BosonitSL")
-                .setSubject(username)
-                .claim("authorities",
-                        grantedAuthorities.stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList()))
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 600000))
-                .signWith(SignatureAlgorithm.HS512,
-                        secretKey.getBytes()).compact();
-
-        return token;
-    }
 }
