@@ -34,7 +34,7 @@ public class reservaController {
     public ResponseEntity<Object> login(@RequestBody inputReservaDTO input) throws Exception {
         if(servicio.guardarReserva(input.toEntity()).isEmpty())
             return ResponseEntity.status(503).body(error); //FIXME FALTA AÑADIR LOS DATOS DEL ERROR
-        return ResponseEntity.status(HttpStatus.OK).body("La reserva se ha añadido satisfactoriamente");
+        return ResponseEntity.status(HttpStatus.OK).body("La reserva se ha añadido satisfactoriamente");  //TODO ES CORRECTO QUE LOS METODOS DEVUELVAN EXCEPCIONES O MEJOR CODIGOS DE ERROR ?
     }
 
 
