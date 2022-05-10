@@ -1,0 +1,2 @@
+INSERT INTO USUARIO( ID,NOMBRE , APELLIDOS , PASSWORD , NUMERO , CORREO , ADMINISTRADOR ) VALUES (1,'Pedro','Sxnchxz','moncloa22','32123456789','presidente@spain.es',true);
+INSERT INTO USUARIO( ID,NOMBRE , APELLIDOS , PASSWORD , NUMERO , CORREO , ADMINISTRADOR ) VALUES (2,'Nadia','Calvinxo','paris832','32123456987','vicepresidenta@spain.es',false);

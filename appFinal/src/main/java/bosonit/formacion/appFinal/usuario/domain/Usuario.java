@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Table
 @Entity
 public class Usuario {
     @Id
@@ -18,9 +17,9 @@ public class Usuario {
     private Integer id;
 
 
-
+    @Column
     private String nombre;
-
+    @Column
     private String apellidos;
 
     @NotNull
@@ -33,9 +32,9 @@ public class Usuario {
     @NotNull
     @Size(min = 3, max= 64, message = "La longitud del correo suministrado no se ajusta al tamaño permitido, entre 3 y 64 caracteres")
     private String correo;
-
+    @Column
     private Date fechaRegistro;
-
+    @Column
     private boolean administrador;
 
 }
