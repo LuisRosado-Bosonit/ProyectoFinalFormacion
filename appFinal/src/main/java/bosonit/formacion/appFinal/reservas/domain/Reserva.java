@@ -5,11 +5,13 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
+@Table
 @Data
 public class Reserva {
     @Id
@@ -17,7 +19,7 @@ public class Reserva {
     private Long id;
 
     private String ciudadDestino;
-    
+
     @NotNull
     private String nombre;
 

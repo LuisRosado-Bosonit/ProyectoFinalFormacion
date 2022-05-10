@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
+@Table
 @Entity
 public class Usuario {
     @Id
