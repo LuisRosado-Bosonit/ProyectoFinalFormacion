@@ -9,7 +9,9 @@ import java.util.Date;
 @Data
 public class ErrorOutputDTO {
 
-    String mensajeError;
-    int codigoErro;
-    Date momentoProduccion;
+
+    private int httpCode;
+    private String msgError;
+    private String tipe;
+    private Date fecha;
 }
