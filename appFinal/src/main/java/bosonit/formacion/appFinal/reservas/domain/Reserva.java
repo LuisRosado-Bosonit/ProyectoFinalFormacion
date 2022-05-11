@@ -16,6 +16,7 @@ public class Reserva {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column
     private String ciudadDestino;
 
     @NotNull
@@ -34,6 +35,6 @@ public class Reserva {
 
     private Date fechaReserva;
 
-    private String hora;
+    private long horaSalida;
 
 }

@@ -27,6 +27,8 @@ public class inputReservaDTO {
     @Size(min = 3, max= 64, message = "La longitud del correo suministrado no se ajusta al tamaño permitido, entre 3 y 64 caracteres")
     private String correo;
 
+    private long horaSalida;
+
     public Reserva toEntity() throws Exception {
         if(nombre == null || apellidos == null || telefono == null || correo == null) //TODO no se si es mejor hacer las comprobaciones de los atributos aquí o en el servicio cuando reciba la persona directamente, para desacoplar
             throw new Exception("Falta alguno de los parámetros necesarios para la creación de la reserva"); //FIXME FALTA ALGUNA COMPROBACION
@@ -36,8 +38,9 @@ public class inputReservaDTO {
         reserva.setFechaReserva(new Date(System.currentTimeMillis()));
         reserva.setCorreo(correo);
         reserva.setApellidos(apellidos);
+        reserva.setCiudadDestino(ciudadDestino);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HHmmss");
-        reserva.setHora((String)dtf.format(LocalDateTime.now()));
+        reserva.setHoraSalida(horaSalida);
         return reserva;
     }
 }
