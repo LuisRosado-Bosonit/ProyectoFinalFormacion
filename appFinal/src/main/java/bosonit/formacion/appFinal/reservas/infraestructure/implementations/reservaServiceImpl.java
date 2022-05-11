@@ -22,7 +22,12 @@ public class reservaServiceImpl implements reservaService {
     @Autowired
     reservaRepository repositorio;
     @Override
-    public Optional<Reserva> guardarReserva(Reserva reserva) {
+    public Optional<Reserva> guardarReserva(Reserva reserva) throws Exception {
+        if(repositorio.comprobarDisponibilidad(reserva.getCiudadDestino(), Long.parseLong(reserva.getHora())) <= 0
+            && repositorio.comprobarAverias(reserva.getCiudadDestino(), Long.parseLong(reserva.getHora()))) {  //TODO DEVOLVER UNA EXCEPCION ES LA MEJOR SOLUCION ??
+            log.error("----- SE HA INTENTADO REALIZAR UNA RESERVA PARA UN AUTOBUS COMPLETO O AVERIADO ------");
+            throw new Exception("No hay disponibilidad para la ruta y hora seleccionada");
+            }
         log.warn("----- SE HA CREADO UNA NUEVA RESERVA -----");
         return Optional.of(repositorio.save(reserva)) ;
     }

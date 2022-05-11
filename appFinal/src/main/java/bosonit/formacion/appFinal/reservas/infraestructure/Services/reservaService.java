@@ -6,5 +6,5 @@ import bosonit.formacion.appFinal.reservas.domain.Reserva;
 import java.util.Optional;
 
 public interface reservaService {
-    public Optional<Reserva> guardarReserva(Reserva reserva);
+    public Optional<Reserva> guardarReserva(Reserva reserva) throws Exception;
 }

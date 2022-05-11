@@ -3,6 +3,7 @@ package bosonit.formacion.appFinal.reservas.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class Reserva {
     @NotNull
     @Size(min = 3, max= 64, message = "La longitud del correo suministrado no se ajusta al tamaño permitido, entre 3 y 64 caracteres")
     private String correo;
+
 
     private Date fechaReserva;
 
