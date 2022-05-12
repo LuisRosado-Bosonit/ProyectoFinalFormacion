@@ -16,6 +16,7 @@ public class reservaServiceImpl implements reservaService {
 
     @Autowired
     reservaRepository repositorio;
+
     @Override
     public Optional<Reserva> guardarReserva(Reserva reserva) throws Exception {
         Integer resultConsulta = repositorio.comprobarDisponibilidad(reserva.getCiudadDestino(), reserva.getHoraSalida()); //TODO GUARDO EL RESULTADO ASI PARA NO EJECUTAR LA CONSULTA PARA COMPROBACION, NO SE SI HAGO BIEN
@@ -26,6 +27,8 @@ public class reservaServiceImpl implements reservaService {
             throw new Exception("No hay disponibilidad para la ruta y hora seleccionada");
             }
         log.warn("----- SE HA CREADO UNA NUEVA RESERVA -----");
+        repositorio.ocuparPlaza(repositorio.obtenedID(reserva.getCiudadDestino(), reserva.getHoraSalida()));
+        log.warn("----- SE HA RESTADO UNA PLAZA DISPONIBLE AL AUTOBUS DE LA RESERVA ACTUAL -----");
         return Optional.of(repositorio.save(reserva)) ;
     }
 }
