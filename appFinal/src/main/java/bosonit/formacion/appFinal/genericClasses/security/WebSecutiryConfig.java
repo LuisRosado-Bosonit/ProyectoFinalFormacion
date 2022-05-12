@@ -21,12 +21,12 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {			//TODO COMO PUEDO DIVIDIR ESTO EN VARIOS METODOS PARA QUE SEA MAS LEGIBLE Y LIGERO
         http.csrf().disable()
                 .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/v0/usuario/login").permitAll()
-				.antMatchers( "/pruebaCorreo").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/v0/autobus").hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.POST, "/api/v0/usuario/register").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/v0/reserva").hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.GET).hasAnyRole("ADMIN","USER")

@@ -41,8 +41,4 @@ public class reservaController {
         return ResponseEntity.status(HttpStatus.OK).body("La reserva se ha añadido satisfactoriamente");  //TODO ES CORRECTO QUE LOS METODOS DEVUELVAN EXCEPCIONES O MEJOR CODIGOS DE ERROR ?
     }
 
-
-
-
-
 }
