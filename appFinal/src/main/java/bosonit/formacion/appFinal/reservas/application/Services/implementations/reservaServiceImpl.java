@@ -28,7 +28,7 @@ public class reservaServiceImpl implements reservaService {
             }
         log.warn("----- SE HA CREADO UNA NUEVA RESERVA -----");
         repositorio.ocuparPlaza(repositorio.obtenedID(reserva.getCiudadDestino(), reserva.getHoraSalida()));
-        log.warn("----- SE HA RESTADO UNA PLAZA DISPONIBLE AL AUTOBUS DE LA RESERVA ACTUAL -----");
+        log.info("----- SE HA RESTADO UNA PLAZA DISPONIBLE AL AUTOBUS DE LA RESERVA ACTUAL -----");
         return Optional.of(repositorio.save(reserva)) ;
     }
 }
