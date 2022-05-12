@@ -2,10 +2,9 @@ package bosonit.formacion.appFinal.usuario.infraestructure.controllers;
 
 import bosonit.formacion.appFinal.genericClasses.ErrorOutputDTO;
 import bosonit.formacion.appFinal.usuario.infraestructure.DTO.input.inputUsuarioDTO;
-import bosonit.formacion.appFinal.usuario.infraestructure.Implementations.UsuarioServiceImpl;
+import bosonit.formacion.appFinal.usuario.application.Services.Implementations.UsuarioServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

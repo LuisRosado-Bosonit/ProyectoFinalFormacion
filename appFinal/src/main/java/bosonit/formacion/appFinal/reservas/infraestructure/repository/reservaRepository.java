@@ -1,4 +1,4 @@
-package bosonit.formacion.appFinal.reservas.repository;
+package bosonit.formacion.appFinal.reservas.infraestructure.repository;
 
 import bosonit.formacion.appFinal.reservas.domain.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;

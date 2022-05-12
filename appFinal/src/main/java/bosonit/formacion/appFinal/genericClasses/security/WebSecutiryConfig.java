@@ -1,6 +1,6 @@
 package bosonit.formacion.appFinal.genericClasses.security;
 
-import bosonit.formacion.appFinal.usuario.infraestructure.utils.JWTAuthorizationFilter;
+import bosonit.formacion.appFinal.usuario.utils.JWTAuthorizationFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,6 +26,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/v0/usuario/login").permitAll()
+				.antMatchers( "/pruebaCorreo").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v0/usuario/register").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/v0/reserva").hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.GET).hasAnyRole("ADMIN","USER")

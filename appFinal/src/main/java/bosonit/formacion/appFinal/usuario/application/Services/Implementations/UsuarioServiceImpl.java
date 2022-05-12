@@ -1,9 +1,9 @@
-package bosonit.formacion.appFinal.usuario.infraestructure.Implementations;
+package bosonit.formacion.appFinal.usuario.application.Services.Implementations;
 
 
 import bosonit.formacion.appFinal.usuario.domain.Usuario;
-import bosonit.formacion.appFinal.usuario.infraestructure.Services.UsuarioService;
-import bosonit.formacion.appFinal.usuario.repository.UsuarioRepository;
+import bosonit.formacion.appFinal.usuario.application.Services.UsuarioService;
+import bosonit.formacion.appFinal.usuario.infraestructure.repository.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 

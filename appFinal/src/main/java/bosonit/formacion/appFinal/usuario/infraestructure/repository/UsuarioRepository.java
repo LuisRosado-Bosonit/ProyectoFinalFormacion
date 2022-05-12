@@ -1,4 +1,4 @@
-package bosonit.formacion.appFinal.usuario.repository;
+package bosonit.formacion.appFinal.usuario.infraestructure.repository;
 
 import bosonit.formacion.appFinal.usuario.domain.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;

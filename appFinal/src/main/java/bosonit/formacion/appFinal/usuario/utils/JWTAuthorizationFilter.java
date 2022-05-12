@@ -1,4 +1,4 @@
-package bosonit.formacion.appFinal.usuario.infraestructure.utils;
+package bosonit.formacion.appFinal.usuario.utils;
 
 import io.jsonwebtoken.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

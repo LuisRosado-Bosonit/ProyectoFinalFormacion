@@ -1,9 +1,9 @@
-package bosonit.formacion.appFinal.reservas.infraestructure.implementations;
+package bosonit.formacion.appFinal.reservas.application.Services.implementations;
 
 
 import bosonit.formacion.appFinal.reservas.domain.Reserva;
-import bosonit.formacion.appFinal.reservas.infraestructure.Services.reservaService;
-import bosonit.formacion.appFinal.reservas.repository.reservaRepository;
+import bosonit.formacion.appFinal.reservas.application.Services.reservaService;
+import bosonit.formacion.appFinal.reservas.infraestructure.repository.reservaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

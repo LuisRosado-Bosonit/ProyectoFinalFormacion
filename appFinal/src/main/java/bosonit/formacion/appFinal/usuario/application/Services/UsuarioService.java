@@ -1,4 +1,4 @@
-package bosonit.formacion.appFinal.usuario.infraestructure.Services;
+package bosonit.formacion.appFinal.usuario.application.Services;
 
 import bosonit.formacion.appFinal.usuario.domain.Usuario;
 import org.springframework.data.util.Pair;

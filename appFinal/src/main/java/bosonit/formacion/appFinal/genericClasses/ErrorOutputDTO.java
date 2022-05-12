@@ -12,6 +12,6 @@ public class ErrorOutputDTO {
 
     private int httpCode;
     private String msgError;
-    private String tipe;
+    private String type;
     private Date fecha;
 }
