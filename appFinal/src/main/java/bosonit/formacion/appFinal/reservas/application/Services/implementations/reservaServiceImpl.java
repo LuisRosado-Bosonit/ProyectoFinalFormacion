@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +31,14 @@ public class reservaServiceImpl implements reservaService {
         log.warn("----- SE HA CREADO UNA NUEVA RESERVA -----");
         repositorio.ocuparPlaza(repositorio.obtenedID(reserva.getCiudadDestino(), reserva.getHoraSalida()));
         log.info("----- SE HA RESTADO UNA PLAZA DISPONIBLE AL AUTOBUS DE LA RESERVA ACTUAL -----");
-        return Optional.of(repositorio.save(reserva)) ;
+        return Optional.of(repositorio.save(reserva));
     }
+
+    @Override
+    public List<Reserva> consultarPlazasOcupadas(Date fecha, long hora, String destion) {
+        log.info("----- SE ESTÁN CONSULTANDO LAS RESERVAS REALIZADAS PARA UN TRAYECTO -----");
+        return repositorio.reservas(fecha, hora, destion); //FIXME FALTAN COMPROBACIONES POR REALIZAR
+    }
+
+
 }

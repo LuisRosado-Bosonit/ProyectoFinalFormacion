@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
+
 @Repository
 public interface reservaRepository extends JpaRepository<Reserva, Long> {
 
@@ -29,4 +32,7 @@ public interface reservaRepository extends JpaRepository<Reserva, Long> {
     @Transactional
     @Query("UPDATE Autobus a SET a.plazas = a.plazas-1 WHERE a.id = ?1 ")
     public void ocuparPlaza(Long id);
+
+    @Query("SELECT * FROM Reserva r WHERE r.fechaReserva = ?1 AND r.horaSalida = ?2 AND r.ciudadDestino")
+    public List<Reserva> reservas(Date fecha, long hora, String destino);
 }
