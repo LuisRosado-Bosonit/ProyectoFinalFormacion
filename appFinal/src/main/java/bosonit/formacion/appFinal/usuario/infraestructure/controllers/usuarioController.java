@@ -31,19 +31,31 @@ public class usuarioController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/v0/usuario/register")
-    public ResponseEntity<Object> register(@RequestBody inputUsuarioDTO input) throws Exception {
-        if(servicio.guardarUsuario(input.toEntity()).isPresent()) return ResponseEntity.status(HttpStatus.OK).body("");  //FIXME AÑADIR CUERPO DE LA RESPUESTA
-        //FIXME FALTA RELLENAR EL ERROR DE LA EXCEPCIÓN
-        log.warn("----- EL ENDPOINT POST(/api/v0/usuario/register) HA DEVUELTO UN ERROR -----");
-        return ResponseEntity.status(501).body(error);
+    public ResponseEntity<Object> register(@RequestBody inputUsuarioDTO input){
+        try {
+            servicio.guardarUsuario(input.toEntity());
+        } catch (Exception e) {
+            log.warn("----- EL ENDPOINT POST(/api/v0/usuario/register) HA DEVUELTO UN ERROR -----");
+            error.setHttpCode(e.hashCode());
+            error.setMsgError(e.getMessage());
+            error.setType(String.valueOf(e.getCause()));
+            error.setFecha(new Date(System.currentTimeMillis()));
+            return ResponseEntity.status(501).body(error);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Se ha registrado al usuario correctamente");
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/v0/usuario/login")
     public ResponseEntity<Object> login(@RequestParam("user") String email, @RequestParam("password") String pwd) {
-        String rol = "USER"; //FIXME FALTA RELLENAR EL ERROR DE LA EXCEPCIÓN
-        if(servicio.comprobarExistenciaYRol(email,pwd).getFirst())
+        String rol = "USER";
+        if(!servicio.comprobarExistenciaYRol(email,pwd).getFirst()) {
+            error.setHttpCode(404);
+            error.setMsgError("Ningún usuario con esa contraseña se encuentra registrado en la base de datos");
+            error.setFecha(new Date(System.currentTimeMillis()));
+            error.setType("Usuario no encontrado o contraseña incorrecta");
             return ResponseEntity.status(501).body(error);
+        }
         if(servicio.comprobarExistenciaYRol(email,pwd).getSecond())
             rol = "ADMIN";
         log.warn("----- SE HA GENERADO UN TOKEN CON EL ROL "+rol+ " -----");

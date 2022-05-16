@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -23,9 +24,14 @@ public class autobusController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/v0/autobus")
-    public ResponseEntity<Object> plazasLibres(@RequestParam("id") long ID_BUS) throws Exception {
-        if(repositorio.obtenerBus(ID_BUS) == null)
-            return ResponseEntity.status(503).body(error); //FIXME FALTA AÑADIR LOS DATOS DEL ERROR AL OBJETO QUE DEVUELVE
+    public ResponseEntity<Object> plazasLibres(@RequestParam("id") long ID_BUS){
+        if(repositorio.obtenerBus(ID_BUS) == null) {
+            error.setMsgError("No existen autobuses con ese identificador asociado");
+            error.setType("ID NO ENCONTRADO");
+            error.setFecha(new Date(System.currentTimeMillis()));
+            error.setHttpCode(404);
+            return ResponseEntity.status(503).body(error);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(repositorio.plazasDisponibles(ID_BUS));
     }
 }

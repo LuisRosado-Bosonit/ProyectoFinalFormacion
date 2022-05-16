@@ -13,13 +13,6 @@ import java.util.List;
 @Repository
 public interface reservaRepository extends JpaRepository<Reserva, Long> {
 
-//    @Query("SELECT a.plazas FROM Autobus a WHERE a.ciudadDestino = ?1 AND a.horaSalida = '1600'" )
-//    public Integer comprobarDisponibilidad(String ciudadDestino, long hora);
-//    @Query("SELECT a.averiado FROM Autobus a WHERE a.ciudadDestino = ?1 AND a.horaSalida = '1600'" )
-//    public String comprobarAverias(String ciudadDestino, long hora);
-
-
-        //FIXME LOS VALIDOS SON LOS DE ARRIBA PERO ES NECESARIO REVISARLOS
     @Query("SELECT a.plazas FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = ?2" ) //WHERE a.ciudadDestino = ?1 and a.horaSalida = '2000'
     public Integer comprobarDisponibilidad(String ciudadDestino, int hora);
     @Query("SELECT a.averiado FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = ?2" )
