@@ -20,19 +20,19 @@ public interface reservaRepository extends JpaRepository<Reserva, Long> {
 
 
         //FIXME LOS VALIDOS SON LOS DE ARRIBA PERO ES NECESARIO REVISARLOS
-    @Query("SELECT a.plazas FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = '2000'" ) //WHERE a.ciudadDestino = ?1 and a.horaSalida = '2000'
-    public Integer comprobarDisponibilidad(String ciudadDestino, long hora);
-    @Query("SELECT a.averiado FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = '2000'" )
-    public String comprobarAverias(String ciudadDestino, long hora);
+    @Query("SELECT a.plazas FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = ?2" ) //WHERE a.ciudadDestino = ?1 and a.horaSalida = '2000'
+    public Integer comprobarDisponibilidad(String ciudadDestino, int hora);
+    @Query("SELECT a.averiado FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = ?2" )
+    public String comprobarAverias(String ciudadDestino, int hora);
 
-    @Query("SELECT a.id FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = '2000'" )
-    public long obtenedID(String ciudadDestino, long hora);
+    @Query("SELECT a.id FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = ?2" )
+    public long obtenedID(String ciudadDestino, int hora);
 
     @Modifying
     @Transactional
     @Query("UPDATE Autobus a SET a.plazas = a.plazas-1 WHERE a.id = ?1 ")
     public void ocuparPlaza(Long id);
 
-    @Query("SELECT * FROM Reserva r WHERE r.fechaReserva = ?1 AND r.horaSalida = ?2 AND r.ciudadDestino")
+    @Query("SELECT r FROM Reserva r WHERE r.fechaReserva LIKE ?1 AND r.horaSalida = ?2 AND r.ciudadDestino = ?3")
     public List<Reserva> reservas(Date fecha, long hora, String destino);
 }

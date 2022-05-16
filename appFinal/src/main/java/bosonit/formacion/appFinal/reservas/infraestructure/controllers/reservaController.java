@@ -1,6 +1,8 @@
 package bosonit.formacion.appFinal.reservas.infraestructure.controllers;
 
+import bosonit.formacion.appFinal.correo.domain.Correo;
 import bosonit.formacion.appFinal.correo.infraestructure.Utils.TLSEmail;
+import bosonit.formacion.appFinal.correo.services.correoService;
 import bosonit.formacion.appFinal.genericClasses.ErrorOutputDTO;
 import bosonit.formacion.appFinal.reservas.domain.Reserva;
 import bosonit.formacion.appFinal.reservas.infraestructure.DTO.input.inputReservaDTO;
@@ -24,6 +26,9 @@ public class reservaController {
     reservaService servicio;
 
     @Autowired
+    correoService servicioCorreo;
+
+    @Autowired
     ErrorOutputDTO error;
 
     @Autowired
@@ -39,6 +44,8 @@ public class reservaController {
         }
         email.mandarEmail(input.getCorreo(),"Confirmación de la reserva","El identificador de su reserva es " +
                                                         String.valueOf(reserva.get().getId()));
+        Correo mensj = new Correo(input);
+        servicioCorreo.guardarCorreo(mensj);
         return ResponseEntity.status(HttpStatus.OK).body("La reserva se ha añadido satisfactoriamente");  //TODO ES CORRECTO QUE LOS METODOS DEVUELVAN EXCEPCIONES O MEJOR CODIGOS DE ERROR ?
     }
 
@@ -56,7 +63,7 @@ public class reservaController {
 //        email.mandarEmail(input.getCorreo(),"Confirmación de la reserva","El identificador de su reserva es " +
 //                String.valueOf(reserva.get().getId()));
 
-        return ResponseEntity.status(HttpStatus.OK).body("La reserva se ha añadido satisfactoriamente");  //TODO ES CORRECTO QUE LOS METODOS DEVUELVAN EXCEPCIONES O MEJOR CODIGOS DE ERROR ?
+        return ResponseEntity.status(HttpStatus.OK).body(servicio.consultarPlazasOcupadas(fecha,hora,destino));  //TODO ES CORRECTO QUE LOS METODOS DEVUELVAN EXCEPCIONES O MEJOR CODIGOS DE ERROR ?
     }
 
 }

@@ -26,7 +26,7 @@ public class Autobus {
     private Date fechaViaje;
 
     @Column
-    private long horaSalida;
+    private int horaSalida;
 
     @Column
     @NotNull

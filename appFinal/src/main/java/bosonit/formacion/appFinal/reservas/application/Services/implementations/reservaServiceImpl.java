@@ -23,8 +23,8 @@ public class reservaServiceImpl implements reservaService {
     public Optional<Reserva> guardarReserva(Reserva reserva) throws Exception {
         Integer resultConsulta = repositorio.comprobarDisponibilidad(reserva.getCiudadDestino(), reserva.getHoraSalida()); //TODO GUARDO EL RESULTADO ASI PARA NO EJECUTAR LA CONSULTA PARA COMPROBACION, NO SE SI HAGO BIEN
         String resultContultaAveria = repositorio.comprobarAverias(reserva.getCiudadDestino(), reserva.getHoraSalida());
-        if((resultConsulta == null) || (resultConsulta <= 0)    //FIXME PARTE DEL IF COMENTADA
-            || (resultContultaAveria == null) /*|| (resultContultaAveria == "true")*/) {  //TODO DEVOLVER UNA EXCEPCION ES LA MEJOR SOLUCION ??
+        if((resultConsulta == null) || (resultConsulta <= 0)
+            || (resultContultaAveria == null) || (resultContultaAveria == "true")) {  //TODO DEVOLVER UNA EXCEPCION ES LA MEJOR SOLUCION ??
             log.error("----- SE HA INTENTADO REALIZAR UNA RESERVA PARA UN AUTOBUS COMPLETO O AVERIADO ------");
             throw new Exception("No hay disponibilidad para la ruta y hora seleccionada");
             }
@@ -35,9 +35,9 @@ public class reservaServiceImpl implements reservaService {
     }
 
     @Override
-    public List<Reserva> consultarPlazasOcupadas(Date fecha, long hora, String destion) {
+    public List<Reserva> consultarPlazasOcupadas(Date fecha, long hora, String destino) {
         log.info("----- SE ESTÁN CONSULTANDO LAS RESERVAS REALIZADAS PARA UN TRAYECTO -----");
-        return repositorio.reservas(fecha, hora, destion); //FIXME FALTAN COMPROBACIONES POR REALIZAR
+        return repositorio.reservas(fecha, hora, destino); //FIXME FALTAN COMPROBACIONES POR REALIZAR
     }
 
 

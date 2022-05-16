@@ -9,6 +9,6 @@ public class ReservaDisponibleOutputDTO {
 
     private String ciudadDestino;
     private Date fechaSalida;
-    private float horaSalida;
+    private int horaSalida;
     private Integer numeroPlazas;
 }

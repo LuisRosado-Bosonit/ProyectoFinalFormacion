@@ -35,6 +35,6 @@ public class Reserva {
 
     private Date fechaReserva;
 
-    private long horaSalida;
+    private int horaSalida;
 
 }
