@@ -24,7 +24,7 @@ public class reservaServiceImpl implements reservaService {
         Integer resultConsulta = repositorio.comprobarDisponibilidad(reserva.getCiudadDestino(), reserva.getHoraSalida()); //TODO GUARDO EL RESULTADO ASI PARA NO EJECUTAR LA CONSULTA PARA COMPROBACION, NO SE SI HAGO BIEN
         String resultContultaAveria = repositorio.comprobarAverias(reserva.getCiudadDestino(), reserva.getHoraSalida());
         if((resultConsulta == null) || (resultConsulta <= 0)
-            || (resultContultaAveria == null) || (resultContultaAveria == "true")) {  //TODO DEVOLVER UNA EXCEPCION ES LA MEJOR SOLUCION ??
+            || (resultContultaAveria == null) || (resultContultaAveria == "true")) {
             log.error("----- SE HA INTENTADO REALIZAR UNA RESERVA PARA UN AUTOBUS COMPLETO O AVERIADO ------");
             throw new Exception("No hay disponibilidad para la ruta y hora seleccionada");
             }
@@ -35,8 +35,13 @@ public class reservaServiceImpl implements reservaService {
     }
 
     @Override
-    public List<Reserva> consultarPlazasOcupadas(Date fecha, long hora, String destino) {
+    public List<Reserva> consultarPlazasOcupadas(Date fecha, int hora, String destino) throws Exception {
         log.info("----- SE ESTÁN CONSULTANDO LAS RESERVAS REALIZADAS PARA UN TRAYECTO -----");
+        if(fecha == null || hora > 24 || hora < 0 || ( !destino.contains("Madrid")
+                &&  !destino.contains("Valencia")
+                && !destino.contains("Bilbao")
+                && !destino.contains("Barcelona")) )
+            throw new NoSuchFieldException("Faltan parámetros por especificar en la consulta o el destino no existe");
         return repositorio.reservas(fecha, hora, destino); //FIXME FALTAN COMPROBACIONES POR REALIZAR
     }
 

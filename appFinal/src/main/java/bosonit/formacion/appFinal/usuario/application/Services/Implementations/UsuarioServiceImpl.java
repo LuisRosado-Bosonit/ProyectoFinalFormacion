@@ -25,7 +25,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         repositorio.save(p);
         log.warn("----- SE HA GUARDADO UN USUARIO EN LA BASE DE DATOS -----");
         log.info("----- SE HA AÑADIDO AL USUARIO "+p+" A LA BASE DE DATOS -----");
-        return repositorio.findByEmail(p.getCorreo());  //TODO SERÍA MEJOR DEVOLVER UN OUTPUT DTO PORQUE SEA INSEGURO MANDAR TODOS LOS DATOS AL SERVICIO ?¿?¿
+        return repositorio.findByEmail(p.getCorreo());
     }
 
     @Override

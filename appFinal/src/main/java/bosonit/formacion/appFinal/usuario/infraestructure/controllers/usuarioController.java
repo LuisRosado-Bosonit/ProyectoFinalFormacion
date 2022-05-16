@@ -36,10 +36,7 @@ public class usuarioController {
             servicio.guardarUsuario(input.toEntity());
         } catch (Exception e) {
             log.warn("----- EL ENDPOINT POST(/api/v0/usuario/register) HA DEVUELTO UN ERROR -----");
-            error.setHttpCode(e.hashCode());
-            error.setMsgError(e.getMessage());
-            error.setType(String.valueOf(e.getCause()));
-            error.setFecha(new Date(System.currentTimeMillis()));
+            error = new ErrorOutputDTO(e.hashCode(),e.getMessage(), String.valueOf(e.getCause()));
             return ResponseEntity.status(501).body(error);
         }
         return ResponseEntity.status(HttpStatus.OK).body("Se ha registrado al usuario correctamente");
@@ -50,10 +47,9 @@ public class usuarioController {
     public ResponseEntity<Object> login(@RequestParam("user") String email, @RequestParam("password") String pwd) {
         String rol = "USER";
         if(!servicio.comprobarExistenciaYRol(email,pwd).getFirst()) {
-            error.setHttpCode(404);
-            error.setMsgError("Ningún usuario con esa contraseña se encuentra registrado en la base de datos");
-            error.setFecha(new Date(System.currentTimeMillis()));
-            error.setType("Usuario no encontrado o contraseña incorrecta");
+            error = new ErrorOutputDTO(404,
+                    "Ningún usuario con esa contraseña se encuentra registrado en la base de datos",
+                    "Usuario no encontrado o contraseña incorrecta" );
             return ResponseEntity.status(501).body(error);
         }
         if(servicio.comprobarExistenciaYRol(email,pwd).getSecond())

@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface reservaService {
     public Optional<Reserva> guardarReserva(Reserva reserva) throws Exception;
 
-    public List<Reserva> consultarPlazasOcupadas(Date fecha, long hora, String destion);
+    public List<Reserva> consultarPlazasOcupadas(Date fecha, int hora, String destino) throws Exception;
 }

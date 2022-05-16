@@ -26,10 +26,9 @@ public class autobusController {
     @GetMapping("/api/v0/autobus")
     public ResponseEntity<Object> plazasLibres(@RequestParam("id") long ID_BUS){
         if(repositorio.obtenerBus(ID_BUS) == null) {
-            error.setMsgError("No existen autobuses con ese identificador asociado");
-            error.setType("ID NO ENCONTRADO");
-            error.setFecha(new Date(System.currentTimeMillis()));
-            error.setHttpCode(404);
+            error = new ErrorOutputDTO(404,
+                    "No existen autobuses con ese identificador asociado",
+                    "ID NO ENCONTRADO");
             return ResponseEntity.status(503).body(error);
         }
         return ResponseEntity.status(HttpStatus.OK).body(repositorio.plazasDisponibles(ID_BUS));
