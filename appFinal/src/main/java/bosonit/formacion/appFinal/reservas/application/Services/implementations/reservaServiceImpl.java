@@ -45,5 +45,10 @@ public class reservaServiceImpl implements reservaService {
         return repositorio.reservas(fecha, hora, destino); //FIXME FALTAN COMPROBACIONES POR REALIZAR
     }
 
+    @Override
+    public List<Reserva> getAllReservas() {
+        return repositorio.findAll();
+    }
+
 
 }

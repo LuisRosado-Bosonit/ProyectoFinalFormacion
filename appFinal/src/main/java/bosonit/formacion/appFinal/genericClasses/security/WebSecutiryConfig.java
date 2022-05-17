@@ -27,6 +27,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/v0/usuario/login").permitAll()
 				.antMatchers( "/swagger-ui.html").permitAll()
+				.antMatchers( "/api/v0/reservas/updateME").permitAll() //FIXME ESTO ES UN AGUJERO DE SEGURIDAD GRANDE, ARREGLAR DESPUES
 				.antMatchers( "/swagger-ui/index.html").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/v0/autobus").hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.POST, "/api/v0/usuario/register").permitAll()

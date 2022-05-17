@@ -9,8 +9,13 @@ import bosonit.formacion.appFinal.reservas.infraestructure.DTO.input.inputReserv
 import bosonit.formacion.appFinal.reservas.application.Services.reservaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -22,6 +27,13 @@ import java.util.Optional;
 @Slf4j
 public class reservaController {
 
+
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    @Value(value = "inicializacion")
+    private String inicializacion;
 
     @Autowired
     reservaService servicio;
@@ -67,6 +79,36 @@ public class reservaController {
             return ResponseEntity.status(HttpStatus.OK).body(error);
         }
         return ResponseEntity.status(HttpStatus.OK).body(plazas);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/v0/reservas/updateME")
+    public ResponseEntity<Object> actualizar() {
+
+
+          /*  ListenableFuture<SendResult<String, List<Reserva>>> future = */ //kafkaTemplate.send(actualizacion, servicio.getAllReservas().get(1));
+        ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(inicializacion,"Mensaje de prueba");
+//            future.addCallback(new ListenableFutureCallback<SendResult<String, List<Reserva>>>() {
+//                @Override
+//                public void onSuccess(SendResult<String, List<Reserva>> result) {
+//                    log.info("----- LA LISTA DE RESERVAS HA LLEGADO CORRECTAMENTE AL DESTINATARIO -----");
+//                }
+//                @Override
+//                public void onFailure(Throwable ex) {System.err.println("Unable to send message=["  + "] due to : " + ex.getMessage());
+//                }
+//            });
+                    future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+                        @Override
+                        public void onSuccess(SendResult<String, String> result) {
+                            log.error("TODO HA SALIDO BIEN "+ result.toString());
+                        }
+
+                        @Override
+                        public void onFailure(Throwable ex) {System.err.println("Unable to send message=["  + "] due to : " + ex.getMessage());
+                        }
+            });
+//FIXME FALTAN AJUSTILLOS LEVES
+        return ResponseEntity.status(HttpStatus.OK).body("todo bien");
     }
 
 }
