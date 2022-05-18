@@ -8,11 +8,15 @@ import bosonit.formacion.appFinal.reservas.domain.Reserva;
 import bosonit.formacion.appFinal.reservas.infraestructure.DTO.input.inputReservaDTO;
 import bosonit.formacion.appFinal.reservas.application.Services.reservaService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.retrytopic.DestinationTopic;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 
 @RestController
@@ -30,7 +35,7 @@ public class reservaController {
 
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, Reserva> kafkaTemplate;
 
     @Value(value = "inicializacion")
     private String inicializacion;
@@ -86,8 +91,17 @@ public class reservaController {
     public ResponseEntity<Object> actualizar() {
 
 
+        KafkaProducer<String, Reserva> producer = createKafkaProducer();
+        servicio.getAllReservas().
+                forEach(
+                        reserva ->
+                                producer.send(new ProducerRecord<String, Reserva>(inicializacion,  reserva))
+                );
+
+        producer.close();
+
           /*  ListenableFuture<SendResult<String, List<Reserva>>> future = */ //kafkaTemplate.send(actualizacion, servicio.getAllReservas().get(1));
-        ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(inicializacion,"Mensaje de prueba");
+     //   ListenableFuture<SendResult<String, Reserva>> future = kafkaTemplate.send(inicializacion,servicio.getAllReservas().get(0));
 //            future.addCallback(new ListenableFutureCallback<SendResult<String, List<Reserva>>>() {
 //                @Override
 //                public void onSuccess(SendResult<String, List<Reserva>> result) {
@@ -97,18 +111,30 @@ public class reservaController {
 //                public void onFailure(Throwable ex) {System.err.println("Unable to send message=["  + "] due to : " + ex.getMessage());
 //                }
 //            });
-                    future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
-                        @Override
-                        public void onSuccess(SendResult<String, String> result) {
-                            log.error("TODO HA SALIDO BIEN "+ result.toString());
-                        }
-
-                        @Override
-                        public void onFailure(Throwable ex) {System.err.println("Unable to send message=["  + "] due to : " + ex.getMessage());
-                        }
-            });
+//                    future.addCallback(new ListenableFutureCallback<SendResult<String, Reserva>>() {
+//                        @Override
+//                        public void onSuccess(SendResult<String, Reserva> result) {
+//                            log.error("TODO HA SALIDO BIEN "+ result.toString());
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Throwable ex) {System.err.println("Unable to send message=["  + "] due to : " + ex.getMessage());
+//                        }
+//            }
+//            );
 //FIXME FALTAN AJUSTILLOS LEVES
         return ResponseEntity.status(HttpStatus.OK).body("todo bien");
     }
+
+    private static KafkaProducer<String, Reserva> createKafkaProducer() { //FIXME ESTO DEBERÍA MOVERLO A OTRA CLASE
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        //props.put(ProducerConfig.CLIENT_ID_CONFIG, CONSUMER_APP_ID);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.appFinal.genericClasses.kafka.serialzer.CustomSerializer");
+
+        return new KafkaProducer(props);
+    }
+
 
 }

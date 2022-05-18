@@ -12,8 +12,8 @@ import java.util.Date;
 public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "identificadorLocal", nullable = false)
-    private Long identificadorLocal;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column
     private String ciudadDestino;
