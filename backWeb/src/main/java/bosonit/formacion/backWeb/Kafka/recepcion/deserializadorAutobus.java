@@ -1,5 +1,7 @@
 package bosonit.formacion.backWeb.Kafka.recepcion;
 
+
+import bosonit.formacion.backWeb.Autobus.domain.Autobus;
 import bosonit.formacion.backWeb.Reserva.domain.Reserva;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -12,7 +14,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class deserializador implements Deserializer<Reserva> {
+public class deserializadorAutobus implements Deserializer<Autobus> {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -21,16 +23,16 @@ public class deserializador implements Deserializer<Reserva> {
     }
 
     @Override
-    public Reserva deserialize(String topic, byte[] data) {
+    public Autobus deserialize(String topic, byte[] data) {
         try {
             if (data == null){
                 log.warn("----- SE ESTÁ INTENTANDO DESEARILIZAR UNA RESERVA NULA O VACÍA -----");
                 return null;
             }
             //FIXME CAMBIAR MENSAJES DE ERROR
-            return objectMapper.readValue(new String(data, "UTF-8"), Reserva.class);
+            return objectMapper.readValue(new String(data, "UTF-8"), Autobus.class);
         } catch (Exception e) {
-            throw new SerializationException("Error when deserializing byte[] to Reserva");
+            throw new SerializationException("Error when deserializing byte[] to Autobus");
         }
     }
 

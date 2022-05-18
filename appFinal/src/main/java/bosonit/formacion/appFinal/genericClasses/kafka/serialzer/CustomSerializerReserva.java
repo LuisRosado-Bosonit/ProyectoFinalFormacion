@@ -7,11 +7,10 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 
 
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class CustomSerializer implements Serializer<Reserva> {
+public class CustomSerializerReserva implements Serializer<Reserva> {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override

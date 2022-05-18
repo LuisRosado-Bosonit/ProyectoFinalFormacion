@@ -4,9 +4,12 @@ import bosonit.formacion.appFinal.correo.domain.Correo;
 import bosonit.formacion.appFinal.correo.infraestructure.Utils.TLSEmail;
 import bosonit.formacion.appFinal.correo.services.correoService;
 import bosonit.formacion.appFinal.genericClasses.ErrorOutputDTO;
+import bosonit.formacion.appFinal.reservas.application.Services.autobusService;
+import bosonit.formacion.appFinal.reservas.domain.Autobus;
 import bosonit.formacion.appFinal.reservas.domain.Reserva;
 import bosonit.formacion.appFinal.reservas.infraestructure.DTO.input.inputReservaDTO;
 import bosonit.formacion.appFinal.reservas.application.Services.reservaService;
+import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -37,11 +40,14 @@ public class reservaController {
     @Autowired
     private KafkaTemplate<String, Reserva> kafkaTemplate;
 
-    @Value(value = "inicializacion")
-    private String inicializacion;
+    @Autowired
+    private KafkaTemplate<String, Autobus> kafkaTemplateBus;
 
     @Autowired
     reservaService servicio;
+
+    @Autowired
+    autobusService servicioAutobus;
 
     @Autowired
     correoService servicioCorreo;
@@ -92,36 +98,22 @@ public class reservaController {
 
 
         KafkaProducer<String, Reserva> producer = createKafkaProducer();
+        KafkaProducer<String, Autobus> producerBus = createKafkaProducerBus();
         servicio.getAllReservas().
                 forEach(
                         reserva ->
-                                producer.send(new ProducerRecord<String, Reserva>(inicializacion,  reserva))
+                                producer.send(new ProducerRecord<String, Reserva>("inicializacionReservas",  reserva))
                 );
 
         producer.close();
 
-          /*  ListenableFuture<SendResult<String, List<Reserva>>> future = */ //kafkaTemplate.send(actualizacion, servicio.getAllReservas().get(1));
-     //   ListenableFuture<SendResult<String, Reserva>> future = kafkaTemplate.send(inicializacion,servicio.getAllReservas().get(0));
-//            future.addCallback(new ListenableFutureCallback<SendResult<String, List<Reserva>>>() {
-//                @Override
-//                public void onSuccess(SendResult<String, List<Reserva>> result) {
-//                    log.info("----- LA LISTA DE RESERVAS HA LLEGADO CORRECTAMENTE AL DESTINATARIO -----");
-//                }
-//                @Override
-//                public void onFailure(Throwable ex) {System.err.println("Unable to send message=["  + "] due to : " + ex.getMessage());
-//                }
-//            });
-//                    future.addCallback(new ListenableFutureCallback<SendResult<String, Reserva>>() {
-//                        @Override
-//                        public void onSuccess(SendResult<String, Reserva> result) {
-//                            log.error("TODO HA SALIDO BIEN "+ result.toString());
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Throwable ex) {System.err.println("Unable to send message=["  + "] due to : " + ex.getMessage());
-//                        }
-//            }
-//            );
+        servicioAutobus.getAllBuses().
+                forEach(
+                        autobus ->
+                            producerBus.send(new ProducerRecord<String, Autobus>("inicializacionAutobuses", autobus)));
+        producerBus.close();
+
+
 //FIXME FALTAN AJUSTILLOS LEVES
         return ResponseEntity.status(HttpStatus.OK).body("todo bien");
     }
@@ -131,7 +123,16 @@ public class reservaController {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         //props.put(ProducerConfig.CLIENT_ID_CONFIG, CONSUMER_APP_ID);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.appFinal.genericClasses.kafka.serialzer.CustomSerializer");
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.appFinal.genericClasses.kafka.serialzer.CustomSerializerReserva");
+
+        return new KafkaProducer(props);
+    }
+    private static KafkaProducer<String, Autobus> createKafkaProducerBus() { //FIXME ESTO DEBERÍA MOVERLO A OTRA CLASE
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        //props.put(ProducerConfig.CLIENT_ID_CONFIG, CONSUMER_APP_ID);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.appFinal.genericClasses.kafka.serialzer.CustomSerializerAutobus");
 
         return new KafkaProducer(props);
     }
