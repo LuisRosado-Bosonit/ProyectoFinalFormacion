@@ -49,7 +49,7 @@ public class inputReservaDTO {
     public inputReservaDTO toInput(Reserva res) {
         this.nombre = res.getNombre();
         this.apellidos = res.getApellidos();
-        this.ciudadDestino = res.getApellidos();
+        this.ciudadDestino = res.getCiudadDestino();
         this.correo = res.getCorreo();
         this.telefono = res.getTelefono();
         this.fechaReserva = res.getFechaReserva();

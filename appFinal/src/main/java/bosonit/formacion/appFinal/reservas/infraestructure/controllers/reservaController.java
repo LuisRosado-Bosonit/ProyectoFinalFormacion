@@ -79,7 +79,7 @@ public class reservaController {
                                                     ) {
         List<Reserva> plazas = null;
         try {
-            plazas = servicio.consultarPlazasOcupadas(fecha,hora,destino);
+            plazas = servicioAutobus.consultarPlazasOcupadas(fecha,hora,destino);
         } catch (Exception e) {
             error = new ErrorOutputDTO(406, e.getMessage(), e.getCause().toString());
             return ResponseEntity.status(HttpStatus.OK).body(error);
