@@ -38,4 +38,15 @@ public class inputReservaDTO {
         reserva.setHoraSalida(horaSalida);
         return reserva;
     }
+
+    public inputReservaDTO toInput(Reserva res) {
+        this.nombre = res.getNombre();
+        this.apellidos = res.getApellidos();
+        this.ciudadDestino = res.getApellidos();
+        this.correo = res.getCorreo();
+        this.telefono = res.getTelefono();
+        this.fechaReserva = res.getFechaReserva();
+        this.horaSalida = res.getHoraSalida();
+        return this;
+    }
 }

@@ -4,6 +4,7 @@ import bosonit.formacion.backWeb.Autobus.domain.Autobus;
 import bosonit.formacion.backWeb.Kafka.recepcion.deserializadorAutobus;
 import bosonit.formacion.backWeb.Kafka.recepcion.deserializadorReserva;
 import bosonit.formacion.backWeb.Reserva.domain.Reserva;
+import bosonit.formacion.backWeb.Reserva.infraestructure.DTO.input.inputReservaDTO;
 import bosonit.formacion.backWeb.Reserva.infraestructure.repository.autobusRepository;
 import bosonit.formacion.backWeb.Reserva.infraestructure.repository.reservaRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,9 @@ public class InicilizarReservas {
 
     @Autowired
     reservaRepository repositorio;
+
+    @Autowired
+    reservaController controladorReservas;
 
     @Autowired
     autobusRepository repositorioAutobuses;
@@ -51,6 +55,7 @@ public class InicilizarReservas {
             log.info("----- SE HA RECIBIDO UN NUEVO AUTOBUS DESDE EL BACKEMPRESA -----");
         }
     }
+
 
     private static KafkaConsumer<String, Reserva> createKafkaConsumerReserva() {
         Properties props = new Properties();

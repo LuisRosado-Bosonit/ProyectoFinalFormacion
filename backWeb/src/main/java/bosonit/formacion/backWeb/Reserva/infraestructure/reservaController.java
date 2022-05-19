@@ -40,8 +40,7 @@ public class reservaController {
             return ResponseEntity.status(503).body(error);
         }
         if(!servicio.comprobarPlazas(reserva.get())) return ResponseEntity.status(HttpStatus.OK).body(""); //FIXME DEVOLVER RESPUESTA HTML INDICANDO QUE NO HAY PLAZAS
+        servicio.avisarAlBack(reserva.get());
         return ResponseEntity.status(HttpStatus.OK).body("Gracias por su reserva, se le enviará un correo con su identificador de la reserva");
     }
-
-
 }

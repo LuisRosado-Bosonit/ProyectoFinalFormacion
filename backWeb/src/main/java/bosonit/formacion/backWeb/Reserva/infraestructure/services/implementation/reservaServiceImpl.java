@@ -3,18 +3,23 @@ package bosonit.formacion.backWeb.Reserva.infraestructure.services.implementatio
 import bosonit.formacion.backWeb.Reserva.domain.Reserva;
 import bosonit.formacion.backWeb.Reserva.infraestructure.repository.autobusRepository;
 import bosonit.formacion.backWeb.Reserva.infraestructure.repository.reservaRepository;
+import bosonit.formacion.backWeb.Reserva.infraestructure.services.reservaService;
 import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Optional;
+import java.util.Properties;
 
 @Slf4j
 @Service
-public class reservaServiceImpl {
+public class reservaServiceImpl implements reservaService {
 
     @Autowired
     reservaRepository repositorio;
@@ -42,8 +47,20 @@ public class reservaServiceImpl {
     }
 
     public void avisarAlBack(Reserva reserv ){
-//        URL url = new URL("https://www.Pharos.sh.com");
-//        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        KafkaProducer<String, Reserva> producer = createKafkaProducer();
+        producer.send(new ProducerRecord<String, Reserva>("addReserva",  reserv));
+        log.warn("----- SE HA ENVIADO UNA RESERVA AL BACKEMPRESA PARA QUE LA PROCESE -----");
+        producer.close();
+    }
+
+    private static KafkaProducer<String, Reserva> createKafkaProducer() {
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        //props.put(ProducerConfig.CLIENT_ID_CONFIG, CONSUMER_APP_ID);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.appFinal.genericClasses.kafka.serialzer.CustomSerializerReserva");
+
+        return new KafkaProducer(props);
     }
 
 }

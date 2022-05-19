@@ -9,20 +9,14 @@ import bosonit.formacion.appFinal.reservas.domain.Autobus;
 import bosonit.formacion.appFinal.reservas.domain.Reserva;
 import bosonit.formacion.appFinal.reservas.infraestructure.DTO.input.inputReservaDTO;
 import bosonit.formacion.appFinal.reservas.application.Services.reservaService;
-import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.retrytopic.DestinationTopic;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -61,7 +55,7 @@ public class reservaController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/v0/reserva")
-    public ResponseEntity<Object> login(@RequestBody inputReservaDTO input)  {
+    public ResponseEntity<Object> realizarReserva(@RequestBody inputReservaDTO input)  {
         Optional<Reserva> reserva = null;
         try {
             reserva = servicio.guardarReserva(input.toEntity());
