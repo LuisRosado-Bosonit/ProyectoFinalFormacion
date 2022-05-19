@@ -38,7 +38,7 @@ public class reservaServiceImpl implements reservaService {
     public List<Reserva> consultarPlazasOcupadas(Date fecha, int hora, String destino) throws Exception {
         log.info("----- SE ESTÁN CONSULTANDO LAS RESERVAS REALIZADAS PARA UN TRAYECTO -----");
         if(fecha == null || hora > 24 || hora < 0 || ( !destino.contains("Madrid")
-                &&  !destino.contains("Valencia")
+                && !destino.contains("Valencia")
                 && !destino.contains("Bilbao")
                 && !destino.contains("Barcelona")) )
             throw new NoSuchFieldException("Faltan parámetros por especificar en la consulta o el destino no existe");

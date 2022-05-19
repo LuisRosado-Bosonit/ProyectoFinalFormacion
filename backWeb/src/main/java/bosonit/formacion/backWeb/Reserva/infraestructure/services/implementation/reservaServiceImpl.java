@@ -49,7 +49,7 @@ public class reservaServiceImpl implements reservaService {
     public void avisarAlBack(Reserva reserv ){
         KafkaProducer<String, Reserva> producer = createKafkaProducer();
         producer.send(new ProducerRecord<String, Reserva>("addReserva",  reserv));
-        log.warn("----- SE HA ENVIADO UNA RESERVA AL BACKEMPRESA PARA QUE LA PROCESE -----");
+        log.warn("----- SE HA ENVIADO UNA RESERVA AL BACKEMPRESA PARA QUE LA PROCESE -----"+ reserv);
         producer.close();
     }
 
@@ -58,7 +58,7 @@ public class reservaServiceImpl implements reservaService {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         //props.put(ProducerConfig.CLIENT_ID_CONFIG, CONSUMER_APP_ID);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.appFinal.genericClasses.kafka.serialzer.CustomSerializerReserva");
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.backWeb.Kafka.envio.CustomSerializerReserva");
 
         return new KafkaProducer(props);
     }
