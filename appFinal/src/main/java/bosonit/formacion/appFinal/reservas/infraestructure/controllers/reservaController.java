@@ -25,6 +25,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -93,6 +94,8 @@ public class reservaController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+
+    @PostConstruct
     @GetMapping("/api/v0/reservas/updateME")
     public ResponseEntity<Object> actualizar() {
 
@@ -113,8 +116,7 @@ public class reservaController {
                             producerBus.send(new ProducerRecord<String, Autobus>("inicializacionAutobuses", autobus)));
         producerBus.close();
 
-
-//FIXME FALTAN AJUSTILLOS LEVES
+        //FIXME FALTAN AJUSTILLOS LEVES
         return ResponseEntity.status(HttpStatus.OK).body("todo bien");
     }
 

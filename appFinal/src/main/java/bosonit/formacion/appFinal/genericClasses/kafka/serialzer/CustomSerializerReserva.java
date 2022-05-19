@@ -25,7 +25,7 @@ public class CustomSerializerReserva implements Serializer<Reserva> {
                 System.out.println("Null received at serializing");
                 return null;
             }
-            System.out.println("Serializing..."); //FIXME ARREGLAR MENSAJES DE EEROR
+            //FIXME ARREGLAR MENSAJES DE EEROR
             return objectMapper.writeValueAsBytes(data);
         } catch (Exception e) {
             throw new SerializationException("Error when serializing MessageDto to byte[]");
