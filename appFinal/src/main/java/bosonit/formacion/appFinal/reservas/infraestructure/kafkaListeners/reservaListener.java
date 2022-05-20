@@ -24,6 +24,7 @@ public class reservaListener {
         byte[] datos = data.getBytes(StandardCharsets.UTF_8);
         Reserva reserv  = des.deserialize("",datos);
         inputReservaDTO input = new inputReservaDTO();
+        input.setFromWeb(true);
         controladorReservas.realizarReserva(input.toInput(reserv));
     }
 }

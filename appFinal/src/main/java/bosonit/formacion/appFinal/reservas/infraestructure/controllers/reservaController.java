@@ -60,6 +60,7 @@ public class reservaController {
         try {
             reserva = servicio.guardarReserva(input.toEntity());
         } catch (Exception e) {
+            if(input.isFromWeb())actualizar();
             error = new ErrorOutputDTO(e.hashCode(),e.getMessage(),String.valueOf(e.getCause()));
             email.mandarEmail(input.getCorreo(),"Error en la reserva","Se ha producido un error al realizar su reserva ");
             return ResponseEntity.status(503).body(error);
@@ -93,7 +94,7 @@ public class reservaController {
     @GetMapping("/api/v0/reservas/updateME")
     public ResponseEntity<Object> actualizar() {
 
-
+        log.warn("----- SE ESTÁN SINCRONIZANDO LAS TABLAS DE AUTOBUSES Y RESERVAS CON LOS BACKEMPRESA -----");
         KafkaProducer<String, Reserva> producer = createKafkaProducer();
         KafkaProducer<String, Autobus> producerBus = createKafkaProducerBus();
         servicio.getAllReservas().

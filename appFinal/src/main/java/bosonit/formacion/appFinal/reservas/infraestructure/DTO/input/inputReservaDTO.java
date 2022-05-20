@@ -31,6 +31,8 @@ public class inputReservaDTO {
 
     private Date fechaReserva;
 
+    private boolean fromWeb = false;
+
     public Reserva toEntity() throws Exception {
         if(nombre == null || apellidos == null || telefono == null || correo == null) //TODO no se si es mejor hacer las comprobaciones de los atributos aquí o en el servicio cuando reciba la persona directamente, para desacoplar
             throw new Exception("Falta alguno de los parámetros necesarios para la creación de la reserva"); //FIXME FALTA ALGUNA COMPROBACION
