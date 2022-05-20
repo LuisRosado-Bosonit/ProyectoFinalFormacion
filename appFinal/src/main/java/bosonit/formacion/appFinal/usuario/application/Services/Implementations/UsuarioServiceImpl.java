@@ -31,12 +31,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Pair<Boolean, Boolean> comprobarExistenciaYRol(String correo, String password) {
         log.info("----- SE HA COMPROBADOR EL ROL DE UN USUARIO DE LA BASE DE DATOS -----");
+        System.out.println("    "+repositorio.findRol(correo, password)+ "    ");
         if(repositorio.findRol(correo, password).isEmpty())
             return Pair.of(
                     false,
                     false);
         return Pair.of(
-                false,
+                true,
                 repositorio.findRol(correo, password).get().isAdministrador());
     }
 }

@@ -43,4 +43,16 @@ public class reservaController {
         servicio.avisarAlBack(reserva.get());
         return ResponseEntity.status(HttpStatus.OK).body("Gracias por su reserva, se le enviará un correo con su identificador de la reserva");
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/v0/reserva")
+    public ResponseEntity<Object> consultarPlazas(@RequestParam("hora") int hora,
+                                                  @RequestParam("dia") int dia,
+                                                  @RequestParam("destino") String destino)  {
+        servicio.comprobarPlazas(destino,hora,dia);
+        return ResponseEntity.status(HttpStatus.OK).body("Las plazas disponibles para el trayecto solicitado son "+
+                servicio.comprobarPlazas(destino,hora,dia)+
+                " plazas");
+    }
+
 }

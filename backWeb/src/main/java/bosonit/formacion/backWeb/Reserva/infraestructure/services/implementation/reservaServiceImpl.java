@@ -46,6 +46,12 @@ public class reservaServiceImpl implements reservaService {
         return true;
     }
 
+    public int comprobarPlazas(String ciudad, int horaSalida, int dia){
+        Integer resultConsulta = repositorioBus.comprobarDisponibilidad(ciudad, horaSalida);
+        log.info("----- SE ESTÁ COMPROBANDO LA OCUPACIÓN DE UN AUTOBUS -----");
+        return resultConsulta;
+    }
+
     public void avisarAlBack(Reserva reserv ){
         KafkaProducer<String, Reserva> producer = createKafkaProducer();
         producer.send(new ProducerRecord<String, Reserva>("addReserva",  reserv));
