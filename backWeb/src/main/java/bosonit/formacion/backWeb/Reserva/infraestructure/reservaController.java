@@ -21,13 +21,7 @@ public class reservaController {
 
     @Autowired
     reservaService servicio;
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/api/v0/token)")
-    public ResponseEntity<Object> login(@RequestParam("user") String email, @RequestParam("password") String pwd) {
-        //comprobar en local si se puede hacer la reserva
-        //enviar mensaje asincrono a bb si es que si
-        return ResponseEntity.status(HttpStatus.OK).body("");
-    }
+
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/v0/reserva")
@@ -53,6 +47,12 @@ public class reservaController {
         return ResponseEntity.status(HttpStatus.OK).body("Las plazas disponibles para el trayecto solicitado son "+
                 servicio.comprobarPlazas(destino,hora,dia)+
                 " plazas");
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/v0/reserva/getAll")
+    public ResponseEntity<Object> consultarReservas( )  {
+        return ResponseEntity.status(HttpStatus.OK).body(servicio.getAllReservas());
     }
 
 }

@@ -24,8 +24,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v0/reserva").permitAll()
+                //.antMatchers(HttpMethod.POST, "/api/v0/reserva").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/v0/reserva").hasAnyRole("ADMIN","USER")
+				.antMatchers(HttpMethod.GET, "/api/v0/reserva/getAll").hasAnyRole("ADMIN","USER")
 				//.antMatchers( "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated();
     }

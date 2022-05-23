@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -57,6 +58,12 @@ public class reservaServiceImpl implements reservaService {
         producer.send(new ProducerRecord<String, Reserva>("addReserva",  reserv));
         log.warn("----- SE HA ENVIADO UNA RESERVA AL BACKEMPRESA PARA QUE LA PROCESE -----"+ reserv);
         producer.close();
+    }
+
+    @Override
+    public List<Reserva> getAllReservas() {
+        log.warn("----- SE ESTÁN CONSULTANDO TODAS LAS RESERVAS -----");
+        return repositorio.findAll();
     }
 
     private static KafkaProducer<String, Reserva> createKafkaProducer() {

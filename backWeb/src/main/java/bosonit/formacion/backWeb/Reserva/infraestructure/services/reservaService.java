@@ -2,6 +2,7 @@ package bosonit.formacion.backWeb.Reserva.infraestructure.services;
 
 import bosonit.formacion.backWeb.Reserva.domain.Reserva;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface reservaService {
@@ -12,4 +13,6 @@ public interface reservaService {
     public int comprobarPlazas(String ciudad, int horaSalida, int dia);
 
     public void avisarAlBack(Reserva reserv );
+
+    public List<Reserva> getAllReservas();
 }
