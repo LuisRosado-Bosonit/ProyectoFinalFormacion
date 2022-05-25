@@ -55,14 +55,14 @@ services:
       "
 
   init-backweb:
-    image: luisrosado/backempresa:latest
+    image: luisrosado/backempresa:backempresa
     ports:
       - "8085:8085"
     depends_on:
       - init-kafka
       - kafka
   init-backempresa:
-    image: luisrosado/backweb:latest
+    image: luisrosado/backweb:backweb
     ports:
       - "8081:8081"
     depends_on:
