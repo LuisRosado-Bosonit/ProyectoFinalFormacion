@@ -25,8 +25,6 @@ public class correoController {
                                                   @QueryParam("fechaSuperior") Date fechaSuperior,
                                                   @QueryParam("horaInferior") int horaInferior,
                                                   @QueryParam("horaSuperior") int horaSuperior) throws Exception {
-//FIXME ESTA SIN HACER
-
         return ResponseEntity.status(HttpStatus.OK).body(" ");
     }
 }

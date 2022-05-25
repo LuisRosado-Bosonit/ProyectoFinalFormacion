@@ -33,7 +33,7 @@ public class reservaController {
             error = new ErrorOutputDTO(e.hashCode(),e.getMessage(),String.valueOf(e.getCause()));
             return ResponseEntity.status(503).body(error);
         }
-        if(!servicio.comprobarPlazas(reserva.get())) return ResponseEntity.status(HttpStatus.OK).body("ERRRRRRRROR"); //FIXME DEVOLVER RESPUESTA HTML INDICANDO QUE NO HAY PLAZAS
+        if(!servicio.comprobarPlazas(reserva.get())) return ResponseEntity.status(503).body("ERRRRRRRROR"); //FIXME DEVOLVER RESPUESTA HTML INDICANDO QUE NO HAY PLAZAS
         servicio.avisarAlBack(reserva.get());
         return ResponseEntity.status(HttpStatus.OK).body("Gracias por su reserva, se le enviará un correo con su identificador de la reserva");
     }

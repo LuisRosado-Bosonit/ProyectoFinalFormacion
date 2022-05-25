@@ -22,9 +22,43 @@ local si es posible y si hay plazas disponibles, una vez hecho esto, la envía
 a través de kafka a backempresa, donde se comprueba de nuevo con la base de datos
 si hay disponibilidad, si hay averías y demás. Finalmente se envía un correo al 
 usuario, haya disponibilidad o no, informando del estado de la reserva.
+
+Todos los endpoints excepto el login y el registro, requieren de un token de acceso,
+por lo que el primer paso a realizar al iniciar la aplicación, debe ser el registro y
+autentificación, para posteriormente, utilizar el token recibido para acceder al resto
+de endpoints.
 ## BackWeb
 
 ### Endpoints
+    Nombre: realizarReserva
+    Ruta de Acceso:POST /api/v0/reserva
+    Parámetros: inputReservaDTO
+    Descripción: Recibe una reserva y comprueba en local si se puede realizar,
+    en caso de que sea posible la guarda y envía al backempresa para que haga 
+    comprobaciones adicionales, envíe el correo y haga comprobaciones adicionales.
+    Respuesta esperada:
+        Caso esperado: http 200 : Gracias por su reserva, se le enviará un correo con
+        su idenificador de la reserva
+        Caso de error: http 503 : ErrorDTO
+
+
+    Nombre: consultarPlazas
+    Ruta de Acceso:GET /api/v0/reserva
+    Parámetros: @RequestParam hora, @RequestParam dia, @RequestParam destino 
+    Descripción: Recibe una hora, un día y un destino, y devuelve el número de 
+    plazas disponibles para dicho destino.
+    Respuesta esperada:
+        Caso esperado: http 200 : Las plazas disponibles para el trayecto solicitado son : 
+        Caso de error: 
+
+
+    Nombre: consultarReservas
+    Ruta de Acceso:GET /api/v0/reserva/getAll
+    Parámetros: 
+    Descripción: Devuelve todas las reservas almacenadas en la base de datos
+    Respuesta esperada:
+        Caso esperado: http 200 : Todas las reservas
+        Caso de error: 
 
     
 ## BackEmpresa
