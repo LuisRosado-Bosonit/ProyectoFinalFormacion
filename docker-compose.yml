@@ -1,6 +1,10 @@
 version: '3.8'
 services:
   eureka-server:
+    command: |
+      "
+      docker build -t ./eurekaServer eurekaserver
+      "
     image: luisrosado/eurekaserver:eurekaserver
     container_name: eureka-server
     ports:
@@ -54,20 +58,25 @@ services:
       kafka-topics --bootstrap-server kafka:29092 --list
       "
 
-  init-backweb:
-    image: luisrosado/backempresa:backempresa
+  backweb:
+    build: backWeb/.
+    container_name: backweb
+    image: backweb
     ports:
       - "8085:8085"
     depends_on:
       - init-kafka
       - kafka
-  init-backempresa:
-    image: luisrosado/backweb:backweb
+  backempresa:
+    build: appFinal/.
+    container_name: backempresa
+    image: backweb
     ports:
       - "8081:8081"
     depends_on:
       - init-kafka
       - kafka
+      
       
   
  
