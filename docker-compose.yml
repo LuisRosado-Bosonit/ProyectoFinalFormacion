@@ -70,7 +70,7 @@ services:
   backempresa:
     build: appFinal/.
     container_name: backempresa
-    image: backweb
+    image: backempresa
     ports:
       - "8081:8081"
     depends_on:
