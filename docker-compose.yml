@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   eureka-server:
-    image: eurekaserver
+    image: luisrosado/eurekaserver:eurekaserver
     container_name: eureka-server
     ports:
     - "8761:8761"
