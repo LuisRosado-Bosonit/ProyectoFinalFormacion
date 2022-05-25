@@ -117,7 +117,7 @@ public class reservaController {
 
     private static KafkaProducer<String, Reserva> createKafkaProducer() { //FIXME ESTO DEBERÍA MOVERLO A OTRA CLASE
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
         //props.put(ProducerConfig.CLIENT_ID_CONFIG, CONSUMER_APP_ID);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.appFinal.genericClasses.kafka.serialzer.CustomSerializerReserva");
@@ -126,7 +126,7 @@ public class reservaController {
     }
     private static KafkaProducer<String, Autobus> createKafkaProducerBus() { //FIXME ESTO DEBERÍA MOVERLO A OTRA CLASE
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
         //props.put(ProducerConfig.CLIENT_ID_CONFIG, CONSUMER_APP_ID);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "bosonit.formacion.appFinal.genericClasses.kafka.serialzer.CustomSerializerAutobus");

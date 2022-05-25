@@ -20,9 +20,13 @@ public class inputUsuarioDTO {
     public Usuario toEntity() throws Exception { //TODO SI ALGUN PARAMETRO NO NULLABLE ES NULL MEJOR EXCEPCION O HTTPSTATUS DE ERROR ?
         if(correo == null || password == null ) throw new Exception(""); //FIXME FALTAN COMPROBACIONES SOBRE CORREO Y CONTRASEÑA EN EL INPUTDTO DE USUARIO
         Usuario nuevo = new Usuario();
+        nuevo.setNombre(nombre);
+        nuevo.setApellidos(apellidos);
+        nuevo.setNumero(numero);
         nuevo.setCorreo(correo);
         nuevo.setPassword(password);
         nuevo.setFechaRegistro(new Date(System.currentTimeMillis()));
+        nuevo.setAdministrador(administrador);
         return nuevo;
     }
 

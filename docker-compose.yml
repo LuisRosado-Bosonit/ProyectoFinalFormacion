@@ -15,15 +15,17 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - 22181:2181
+      - "22181:2181"
+    restart: always
   
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
     depends_on:
       - zookeeper
+    restart: always
     ports:
-      - 29092:29092
+      - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -53,17 +55,19 @@ services:
       "
 
   init-backweb:
-    image: backweb
+    image: luisrosado/backempresa:latest
     ports:
-      - 8085:8085
+      - "8085:8085"
     depends_on:
       - init-kafka
+      - kafka
   init-backempresa:
-    image: backempresa
+    image: luisrosado/backweb:latest
     ports:
-      - 8081:8081
+      - "8081:8081"
     depends_on:
       - init-kafka
+      - kafka
       
   
  
