@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface UsuarioService {
 
-    public Optional<Usuario> guardarUsuario(Usuario p);
+    public Optional<Usuario> guardarUsuario(Usuario p) throws Exception;
     public Pair<Boolean, Boolean> comprobarExistenciaYRol(String correo, String password);
 }

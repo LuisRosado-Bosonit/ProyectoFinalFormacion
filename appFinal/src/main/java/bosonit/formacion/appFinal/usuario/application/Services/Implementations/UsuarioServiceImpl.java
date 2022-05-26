@@ -21,7 +21,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     @Override
-    public Optional<Usuario> guardarUsuario(Usuario p) {
+    public Optional<Usuario> guardarUsuario(Usuario p) throws Exception {
+        Optional<Usuario> resultadoConsulta =  repositorio.findByEmail(p.getCorreo());
+        if(resultadoConsulta.isPresent())throw new Exception("EL USUARIO YA SE ENCONTRABA EN LA BASE DE DATOS");
         repositorio.save(p);
         log.warn("----- SE HA GUARDADO UN USUARIO EN LA BASE DE DATOS -----");
         log.info("----- SE HA AÑADIDO AL USUARIO "+p+" A LA BASE DE DATOS -----");

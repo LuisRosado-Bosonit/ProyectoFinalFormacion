@@ -17,8 +17,13 @@ public class inputUsuarioDTO {
     private Date fechaRegistro;
     private boolean administrador;
 
-    public Usuario toEntity() throws Exception { //TODO SI ALGUN PARAMETRO NO NULLABLE ES NULL MEJOR EXCEPCION O HTTPSTATUS DE ERROR ?
-        if(correo == null || password == null ) throw new Exception(""); //FIXME FALTAN COMPROBACIONES SOBRE CORREO Y CONTRASEÑA EN EL INPUTDTO DE USUARIO
+    public Usuario toEntity() throws Exception {
+        if(correo == null || password == null || numero == null
+        || password.length() < 8 || password.length() > 64
+        || numero.length() > 18 ||numero.length() < 3
+        || correo.length() > 64 || correo.length() < 3
+        || !correo.contains("@"))
+            throw new Exception("Faltan parámetros por especificar, o la longitud de ellos no es correcta");
         Usuario nuevo = new Usuario();
         nuevo.setNombre(nombre);
         nuevo.setApellidos(apellidos);

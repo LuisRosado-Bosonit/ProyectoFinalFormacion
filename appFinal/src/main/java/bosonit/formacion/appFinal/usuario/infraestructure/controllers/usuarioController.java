@@ -36,7 +36,7 @@ public class usuarioController {
             servicio.guardarUsuario(input.toEntity());
         } catch (Exception e) {
             log.warn("----- EL ENDPOINT POST(/api/v0/usuario/register) HA DEVUELTO UN ERROR -----");
-            error = new ErrorOutputDTO(e.hashCode(),e.getMessage(), String.valueOf(e.getCause()));
+            error = new ErrorOutputDTO(422,e.getMessage(), String.valueOf(e.getCause()));
             return ResponseEntity.status(501).body(error);
         }
         return ResponseEntity.status(HttpStatus.OK).body("Se ha registrado al usuario correctamente");
