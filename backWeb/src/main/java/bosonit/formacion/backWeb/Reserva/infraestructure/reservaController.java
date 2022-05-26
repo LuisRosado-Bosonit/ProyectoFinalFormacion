@@ -26,7 +26,7 @@ public class reservaController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/v0/reserva")
     public ResponseEntity<Object> realizarReserva(@RequestBody inputReservaDTO input)  {
-        Optional<Reserva> reserva = null;
+        Optional<Reserva> reserva ;
         try {
             reserva = servicio.guardarReserva(input.toEntity());
         } catch (Exception e) {

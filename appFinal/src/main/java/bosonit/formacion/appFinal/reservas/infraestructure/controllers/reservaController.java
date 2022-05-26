@@ -56,7 +56,7 @@ public class reservaController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/v0/reserva")
     public ResponseEntity<Object> realizarReserva(@RequestBody inputReservaDTO input)  {
-        Optional<Reserva> reserva = null;
+        Optional<Reserva> reserva ;
         try {
             reserva = servicio.guardarReserva(input.toEntity());
         } catch (Exception e) {
@@ -65,7 +65,7 @@ public class reservaController {
             email.mandarEmail(input.getCorreo(),"Error en la reserva","Se ha producido un error al realizar su reserva ");
             return ResponseEntity.status(503).body(error);
         }
-        email.mandarEmail(input.getCorreo(),"Confirmación de la reserva","El identificador de su reserva es " +
+        if(reserva.isPresent())email.mandarEmail(input.getCorreo(),"Confirmación de la reserva","El identificador de su reserva es " +
                                                         String.valueOf(reserva.get().getId()));
         Correo mensj = new Correo(input);
         servicioCorreo.guardarCorreo(mensj);

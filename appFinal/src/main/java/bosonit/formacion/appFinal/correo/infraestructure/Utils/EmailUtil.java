@@ -16,7 +16,7 @@ public class EmailUtil {
         try
         {
             MimeMessage msg = new MimeMessage(session);
-            //set message headers
+
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
             msg.addHeader("format", "flowed");
             msg.addHeader("Content-Transfer-Encoding", "8bit");
@@ -32,11 +32,8 @@ public class EmailUtil {
             msg.setSentDate(new Date());
 
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            //System.out.println("Message is ready");
-           // Transport.send("hola","luis.rosado@bosonit.com","padawan00","bustopcorporate@gmail.com");
+            System.out.println(msg);
             Transport.send(msg);
-
-            //System.out.println("EMail Sent Successfully!!");
         }
         catch (Exception e) {
             e.printStackTrace();

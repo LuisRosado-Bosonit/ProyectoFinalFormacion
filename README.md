@@ -113,3 +113,10 @@ de endpoints.
     Respuesta esperada:
         Caso esperado: http 200 : El número de plzas disponibles
         Caso de error: http 503 : ErrorDTO
+
+    Nombre: geatAll
+    Ruta de Acceso:GET /api/v0/autobus/all
+    Parámetros: 
+    Descripción: Devuelve todos los autobuses, debes tener el rol de admin para acceder a este endpoint
+    Respuesta esperada:
+        Caso esperado: http 200 : Lista de todos los autobuses

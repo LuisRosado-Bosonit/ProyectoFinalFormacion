@@ -1,12 +1,10 @@
 package bosonit.formacion.appFinal.genericClasses.kafka.serialzer;
 
 import bosonit.formacion.appFinal.reservas.domain.Autobus;
-import bosonit.formacion.appFinal.reservas.domain.Reserva;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
-
 
 import java.util.Map;
 

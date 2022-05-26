@@ -16,7 +16,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		public void configure(WebSecurity web) throws Exception {
 			web.ignoring()
-					.antMatchers("/h2-console/**");
+					.antMatchers("/h2-console/**")
+					.antMatchers("/h2-console");
 		}
 
 
@@ -27,9 +28,12 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/v0/usuario/login").permitAll()
 				.antMatchers( "/swagger-ui.html").permitAll()
+				.antMatchers( "/h2-console/**").permitAll()
+				.antMatchers( "/h2-console").permitAll()
 				.antMatchers( "/api/v0/reservas/updateME").permitAll()
 				.antMatchers( "/swagger-ui/index.html").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/v0/autobus").hasAnyRole("ADMIN","USER")
+				.antMatchers(HttpMethod.GET, "/api/v0/autobus/all").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/v0/usuario/register").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/v0/reserva").hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.GET).hasAnyRole("ADMIN","USER")

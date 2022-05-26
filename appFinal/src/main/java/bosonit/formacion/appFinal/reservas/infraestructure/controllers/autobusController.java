@@ -33,4 +33,12 @@ public class autobusController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(repositorio.plazasDisponibles(ID_BUS));
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/api/v0/autobus/all")
+    public ResponseEntity<Object> getAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(repositorio.findAll());
+    }
+
+
 }

@@ -3,6 +3,8 @@ services:
   eureka-server:
     command: |
       "
+      docker rm nuevacarpeta
+      docker rmi eurekaserver eurekaserver
       docker build -t ./eurekaServer eurekaserver
       "
     image: luisrosado/eurekaserver:eurekaserver
@@ -62,8 +64,14 @@ services:
     build: backWeb/.
     container_name: backweb
     image: backweb
+    environment:
+      email.password: padawan00
     ports:
       - "8085:8085"
+    command: |
+      "
+      docker rmi backweb backweb
+      "
     depends_on:
       - init-kafka
       - kafka
@@ -76,6 +84,10 @@ services:
     depends_on:
       - init-kafka
       - kafka
+    command: |
+      "
+      docker rmi backempresa backempresa
+      "
       
       
   
