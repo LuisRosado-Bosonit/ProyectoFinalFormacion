@@ -67,6 +67,7 @@ public class reservaController {
         }
         if(reserva.isPresent())email.mandarEmail(input.getCorreo(),"Confirmación de la reserva","El identificador de su reserva es " +
                                                         String.valueOf(reserva.get().getId()));
+        actualizar();
         Correo mensj = new Correo(input);
         servicioCorreo.guardarCorreo(mensj);
         return ResponseEntity.status(HttpStatus.OK).body("La reserva se ha añadido satisfactoriamente");

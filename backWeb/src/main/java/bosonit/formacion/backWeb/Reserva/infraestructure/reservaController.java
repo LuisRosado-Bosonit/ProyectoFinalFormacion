@@ -33,7 +33,12 @@ public class reservaController {
             error = new ErrorOutputDTO(e.hashCode(),e.getMessage(),String.valueOf(e.getCause()));
             return ResponseEntity.status(503).body(error);
         }
-        if(!servicio.comprobarPlazas(reserva.get())) return ResponseEntity.status(503).body("ERRRRRRRROR"); //FIXME DEVOLVER RESPUESTA HTML INDICANDO QUE NO HAY PLAZAS
+        try {
+            servicio.comprobarPlazas(reserva.get());
+        } catch (Exception e) {
+            error = new ErrorOutputDTO(e.hashCode(),e.getMessage(),String.valueOf(e.getCause()));
+            return ResponseEntity.status(503).body(error);
+        }
         servicio.avisarAlBack(reserva.get());
         return ResponseEntity.status(HttpStatus.OK).body("Gracias por su reserva, se le enviará un correo con su identificador de la reserva");
     }
@@ -42,10 +47,16 @@ public class reservaController {
     @GetMapping("/api/v0/reserva")
     public ResponseEntity<Object> consultarPlazas(@RequestParam("hora") int hora,
                                                   @RequestParam("dia") int dia,
-                                                  @RequestParam("destino") String destino)  {
-        servicio.comprobarPlazas(destino,hora,dia);
+                                                  @RequestParam("destino") String destino) throws Exception {
+        Integer plazas ;
+        try {
+            plazas = servicio.comprobarPlazas(destino,hora,dia);
+        } catch (Exception e) {
+            error = new ErrorOutputDTO(e.hashCode(),e.getMessage(),String.valueOf(e.getCause()));
+            return ResponseEntity.status(500).body(error);
+        }
         return ResponseEntity.status(HttpStatus.OK).body("Las plazas disponibles para el trayecto solicitado son "+
-                servicio.comprobarPlazas(destino,hora,dia)+
+                plazas+
                 " plazas");
     }
 

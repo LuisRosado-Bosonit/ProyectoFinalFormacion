@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface autobusRepository extends JpaRepository<Autobus, Long> {
 
-    @Query("SELECT a.plazas FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = ?2" ) //WHERE a.ciudadDestino = ?1 and a.horaSalida = '2000'
+    @Query("SELECT a.plazas FROM Autobus a WHERE a.ciudadDestino = ?1 AND a.horaSalida = ?2 " )
     Integer comprobarDisponibilidad(String ciudadDestino, int hora);
 
     @Modifying
@@ -16,6 +16,6 @@ public interface autobusRepository extends JpaRepository<Autobus, Long> {
     @Query("UPDATE Autobus a SET a.plazas = a.plazas-1 WHERE a.id = ?1 ")
     void ocuparPlaza(Long id);
 
-    @Query("SELECT a.id FROM Autobus a WHERE a.ciudadDestino LIKE ?1 AND a.horaSalida = ?2" )
+    @Query("SELECT a.id FROM Autobus a WHERE a.ciudadDestino = ?1 AND a.horaSalida = ?2 " )
     long obtenedID(String ciudadDestino, int hora);
 }

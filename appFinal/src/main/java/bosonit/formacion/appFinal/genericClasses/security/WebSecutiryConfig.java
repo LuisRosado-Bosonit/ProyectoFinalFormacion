@@ -22,7 +22,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {			//TODO COMO PUEDO DIVIDIR ESTO EN VARIOS METODOS PARA QUE SEA MAS LEGIBLE Y LIGERO
+    protected void configure(HttpSecurity http) throws Exception {	
         http.csrf().disable()
                 .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()

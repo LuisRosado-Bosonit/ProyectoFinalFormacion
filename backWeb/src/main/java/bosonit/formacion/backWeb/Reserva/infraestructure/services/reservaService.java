@@ -9,8 +9,8 @@ public interface reservaService {
 
     public Optional<Reserva> guardarReserva(Reserva reserva) throws Exception;
 
-    public boolean comprobarPlazas(Reserva reserva);
-    public int comprobarPlazas(String ciudad, int horaSalida, int dia);
+    public boolean comprobarPlazas(Reserva reserva) throws Exception;
+    public int comprobarPlazas(String ciudad, int horaSalida, int dia) throws Exception;
 
     public void avisarAlBack(Reserva reserv );
 

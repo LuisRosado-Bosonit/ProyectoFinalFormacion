@@ -30,15 +30,18 @@ public class reservaServiceImpl implements reservaService {
         return Optional.of(repositorio.save(reserva));
     }
 
-    public boolean comprobarPlazas(Reserva reserva){
-        Integer resultConsulta = repositorioBus.comprobarDisponibilidad(reserva.getCiudadDestino(), reserva.getHoraSalida());
-        log.info("----- SE ESTÁ COMPROBANDO LA OCUPACIÓN DE UN AUTOBUS -----");
-        return (resultConsulta != null) && (resultConsulta > 0);
+    public boolean comprobarPlazas(Reserva reserva) throws Exception {
+        Integer resultConsulta;
+            resultConsulta = repositorioBus.comprobarDisponibilidad(reserva.getCiudadDestino(), reserva.getHoraSalida());
+        log.info("----- SE ESTÁ COMPROBANDO LA OCUPACIÓN DE UN AUTOBUS PARA LA CIUDAD "+reserva.getCiudadDestino() +" Y LA HORA "+   reserva.getHoraSalida() + " -----");
+            if(resultConsulta == null) throw new Exception ("No se han encontrado plazas disponibles");
+        return (resultConsulta > 0);
     }
 
-    public int comprobarPlazas(String ciudad, int horaSalida, int dia){
+    public int comprobarPlazas(String ciudad, int horaSalida, int dia) throws Exception {
         Integer resultConsulta = repositorioBus.comprobarDisponibilidad(ciudad, horaSalida);
-        log.info("----- SE ESTÁ COMPROBANDO LA OCUPACIÓN DE UN AUTOBUS -----");
+        log.info("----- SE ESTÁ COMPROBANDO LA OCUPACIÓN DE UN AUTOBUS PARA LA CIUDAD "+ciudad +" Y LA HORA "+  horaSalida + " -----");
+        if(resultConsulta == null) throw new Exception("No se han encontrado plazas libres para el trayecto y hora seleccionados");
         return resultConsulta;
     }
 
